@@ -1,8 +1,8 @@
-import re
+import re,time
 from playwright.sync_api import sync_playwright
 from threading import Thread
 
-root_url ="http://localhost:8080"
+root_url ="http://45.33.199.28"  #"http://localhost:8080"
 visited_urls = set()
 
 def sanitize_href(href):
@@ -16,6 +16,7 @@ def scrape_url(url):
         page = browser.new_page()
         page.goto(root_url+url)
         page.wait_for_selector('a')
+        time.sleep(1)
         content = page.content()
         hrefs = re.findall(r'href="([a-z0-9_#\/]+)"', content)
         for href in hrefs:
